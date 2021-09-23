@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block content %}
+<div class="container pt-4" id="title_container">
+	<h1 align="center" style="color: White;">{{title}}</h1>
+</div>
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div class="container-fluid" id="alert_container">
+	<div class="alert alert-info alert-dismissible">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		{{messages[0]}}
+	</div>
+</div>
+{% endif %} {% endwith %}
+<div class="container-fluid" id="table_container">
+	<a href="/add_film?film_category={{film_category}}"
+		class="btn btn-success" id="add_film_button">Add Film</a>
+	<form class="form-inline" style="float: right;">
+		<input class="form-control mr-sm-2" type="text" id="search_text"
+			name="search_text" placeholder="Search in this category">
+	</form>
+	<table class="table table-light table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>#</th> {% for column in columns %} {% if column != 'film_id' %}
+				<th>{{column.capitalize().replace('_', ' ')}}</th> {% endif %} {%
+				endfor %}
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody id="films_table">
+			{% for row in rows %}
+			<tr>
+				<td>{{loop.index}}</td> {% for value in row %} {% if loop.index != 1
+				%}
+				<td>{{value}}</td> {% endif %} {% endfor %}
+				<td align="center"><a
+					href="/edit_film?film_id={{row[0]}}&title={{row[1]}}&description={{row[2]}}&release_year={{row[3]}}&language={{row[4]}}&length={{row[5]}}&rating={{row[6]}}&film_category={{film_category}}">
+						<i class="fa fa-edit" style="color: darkorange;"></i>
+				</a></td>
+				<td align="center"><a
+					href="/delete_film?film_id={{row[0]}}&title={{row[1]}}&film_category={{film_category}}">
+						<i class="fa fa-trash" style="color: crimson;"></i>
+				</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<script>
+	$(document).ready(
+			function() {
+				$("#search_text").on(
+						"keyup",
+						function() {
+							var value = $(this).val().toLowerCase();
+							$("#films_table tr").filter(
+									function() {
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+									});
+						});
+			});
+</script>
+{% endblock %}

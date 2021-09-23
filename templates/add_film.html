@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-4" id="title_container">
+	<h1 align="center" style="color: White;">{{title}}</h1>
+</div>
+<div class="container bg-light p-4 rounded-lg" id="form_container">
+	<form action="/add_film" method="post" id="add_film_form">
+		<div class="form-group">
+			<label for="title">Title</label> <input type="text" id="title"
+				name="title" placeholder="Enter title" class="form-control"
+				maxlength=100 required></input>
+		</div>
+		<div class="form-group">
+			<label for="description">Description</label>
+			<textarea id="description" name="description"
+				placeholder="Enter description" class="form-control" maxlength=255></textarea>
+		</div>
+		<div class="form-group">
+			<label for="category">Category</label> <select id="category"
+				name="category" class="form-control"> {% for category in
+				categories %} {% if category[0] == request.args.get('film_category')
+				%}
+				<option value="{{category[0]}}" selected>{{category[0]}}</option> {%
+				else %}
+				<option value="{{category[0]}}">{{category[0]}}</option> {% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="release_year">Release year</label> <input type="number"
+				id="release_year" name="release_year"
+				placeholder="Enter release year" min=1901 max=2155
+				class="form-control" required></input>
+		</div>
+		<div class="form-group">
+			<label for="language">Language</label> <select id="language"
+				name="language" class="form-control"> {% for language in
+				languages %}
+				<option value="{{language[0]}}">{{language[0]}}</option> {% endfor
+				%}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="length">Length</label> <input type="number" id="length"
+				name="length" placeholder="Enter length" class="form-control" min=1
+				max=999 required></input>
+		</div>
+		<div class="form-group">
+			<label for="rating">Rating</label> <select id="rating" name="rating"
+				class="form-control"> {% for film_rating in film_ratings %}
+				<option value="{{film_rating}}">{{film_rating}}</option> {% endfor
+				%}
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary" id="submit_button">Submit</button>
+		<a href="/{{request.args.get('film_category').lower()}}"
+			class="btn btn-danger" style="float: right;" role="button">Cancel</a>
+	</form>
+</div>
+{% endblock %}

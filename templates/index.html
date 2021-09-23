@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-4" id="title_container">
+	<h1 align="center" style="color: White;">{{title}}</h1>
+</div>
+<div class="container">
+	<div class="jumbotron" style="opacity: 0.95;">
+		<p>Here you can find information on over 1000 films of different
+			genres.</p>
+		<p>Movie information includes the following:</p>
+		<ul>
+			<li>Title</li>
+			<li>Description</li>
+			<li>Release year</li>
+			<li>Language</li>
+			<li>Length</li>
+			<li>Rating</li>
+		</ul>
+		<p>All films are sorted by genres (categories).</p>
+		<p>You can add new films to the catalog, update or delete existing
+			ones.</p>
+		<p>Select a category from the navigation bar to start exploring
+			the catalog.</p>
+	</div>
+</div>
+{% endblock %}
